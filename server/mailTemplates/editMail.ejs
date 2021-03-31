@@ -1,0 +1,29 @@
+<% if (helpRequests.length === 0 && helpOffers.length === 0){ %>
+    <p>Du hast keine Hilfeanfragen oder Hilfeangebote mit dieser E-Mail-Adresse gestellt.</p>
+<% } else { %>
+    <% if (helpRequests.length > 0) { %>
+    <p>Du hast folgende Hilfeanfragen gestellt</p>
+    <ul>
+        <% helpRequests.forEach(function(helpRequest){ %>
+            <li><%= helpRequest.title %>:
+                <a href="<%= editRequestRootUrl %>/request/<%= helpRequest.id %>?token=<%= helpRequest.token %>">
+                    Bearbeiten oder Löschen
+                </a>
+            </li>
+        <% }); %>
+    </ul>
+    <% } %>
+    <% if (helpOffers.length > 0) { %>
+    <p>Du hast folgende Hilfeangebote gestellt</p>
+    <ul>
+        <% helpOffers.forEach(function(helpOffer){ %>
+            <li><%= helpOffer.title %>:
+                <a href="<%= editRequestRootUrl %>/offer/<%= helpOffer.id %>?token=<%= helpOffer.token %>">
+                    Bearbeiten oder Löschen
+                </a>
+            </li>
+        <% }); %>
+    </ul>
+    <% } %>
+<% } %>
+<%- include('footer'); %>
