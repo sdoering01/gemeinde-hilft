@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
+import cors from 'cors';
 
-import { apiBaseUrl } from './config';
+import { apiBaseUrl, corsOrigin } from './config';
 import baseRouter from './routes/baseRouter';
 import { HttpError } from './util/HttpError';
 
@@ -8,6 +9,7 @@ export const app = express();
 
 // TODO: Add helmet
 
+app.use(cors({ origin: corsOrigin }));
 app.use(express.json());
 
 app.use(`${apiBaseUrl}/`, baseRouter);
