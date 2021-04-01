@@ -13,13 +13,9 @@ export class HelpRequestRepo {
     }
 
     static async getAll() {
-        return knex('helpRequests').select(
-            'id',
-            'name',
-            'title',
-            'description',
-            'createdAt'
-        );
+        return knex('helpRequests')
+            .select('id', 'name', 'title', 'description', 'createdAt')
+            .orderBy('id', 'desc');
     }
 
     static async getByIdWithToken(id: number) {
