@@ -5,7 +5,7 @@ interface Props {
     isActive: boolean;
 }
 
-export const RequestListHeaderButton: React.FC<Props> = ({
+export const OverviewListHeaderButton: React.FC<Props> = ({
     onClick,
     isActive,
     children
@@ -24,4 +24,4 @@ export const RequestListHeaderButton: React.FC<Props> = ({
     );
 };
 
-export default RequestListHeaderButton;
+export default OverviewListHeaderButton;

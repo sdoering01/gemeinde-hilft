@@ -6,7 +6,7 @@ interface Props {
     activeSection: Section;
 }
 
-const RequestListBody: React.FC<Props> = ({ activeSection }) => {
+const OverviewListBody: React.FC<Props> = ({ activeSection }) => {
     return (
         <div className="bg-blue-100 p-4 xs:p-8 rounded-b-2xl shadow-md">
             {activeSection === Section.REQUESTS ? (
@@ -18,4 +18,4 @@ const RequestListBody: React.FC<Props> = ({ activeSection }) => {
     );
 };
 
-export default RequestListBody;
+export default OverviewListBody;

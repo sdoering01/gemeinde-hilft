@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import LoggedInExlusive from '../components/LoggedInExlusive';
-import RequestListHeader from '../components/RequestListHeader';
-import RequestListBody from '../components/RequestListBody';
+import OverviewListHeader from '../components/OverviewListHeader';
+import OverviewListBody from '../components/OverviewListBody';
 
 interface Props {}
 
@@ -19,11 +19,11 @@ const ListPage: React.FC<Props> = () => {
     return (
         <LoggedInExlusive>
             <div className="max-w-screen-md mx-auto">
-                <RequestListHeader
+                <OverviewListHeader
                     activeSection={activeSection}
                     setActiveSection={setActiveSection}
                 />
-                <RequestListBody activeSection={activeSection} />
+                <OverviewListBody activeSection={activeSection} />
             </div>
         </LoggedInExlusive>
     );
