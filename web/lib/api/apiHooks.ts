@@ -14,7 +14,8 @@ interface HelpRequestResponse {
 
 export const getAllHelpRequestsKey = 'helpRequests';
 
-export const useHelpRequests = (password: string) => {
+export const useHelpRequests = () => {
+    const { password } = useContext(PasswordContext);
     return useQuery<HelpRequestResponse[]>(getAllHelpRequestsKey, async () =>
         getHelpRequests(password)
     );
