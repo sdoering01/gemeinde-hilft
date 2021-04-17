@@ -13,20 +13,12 @@ const CreateIndex: React.FC<Props> = () => {
             <div className="flex flex-wrap gap-8 lg:gap-12 justify-center">
                 <Link href="/create/request">
                     <a>
-                        <HelpCategoryButton
-                            variant="1"
-                            backgroundContent="🤲"
-                            textContent="Hilfeanfrage"
-                        />
+                        <HelpCategoryButton variant="request" />
                     </a>
                 </Link>
                 <Link href="/create/offer">
                     <a>
-                        <HelpCategoryButton
-                            variant="2"
-                            backgroundContent="💪"
-                            textContent="Hilfeangebot"
-                        />
+                        <HelpCategoryButton variant="offer" />
                     </a>
                 </Link>
             </div>
