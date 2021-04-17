@@ -14,7 +14,7 @@ const login: React.FC<Props> = () => {
     const router = useRouter();
 
     const [passwordInput, setPasswordInput] = useState('');
-    const [rememberPassword, setRememberPassword] = useState(false);
+    const [rememberPassword, setRememberPassword] = useState(true);
 
     const { login } = useContext(PasswordContext);
 
