@@ -5,7 +5,7 @@ import { PasswordContext } from '../lib/context/PasswordContext';
 
 interface Props {}
 
-const LoggedInExlusive: React.FC<Props> = ({ children }) => {
+const LoggedOutExlusive: React.FC<Props> = ({ children }) => {
     const { isLoggedIn } = useContext(PasswordContext);
     const router = useRouter();
 
@@ -17,4 +17,4 @@ const LoggedInExlusive: React.FC<Props> = ({ children }) => {
     return <>{children}</>;
 };
 
-export default LoggedInExlusive;
+export default LoggedOutExlusive;
