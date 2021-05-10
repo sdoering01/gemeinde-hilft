@@ -3,7 +3,8 @@
   "scripts": {
     "build": "tsc",
     "build-watch": "tsc -w",
-    "start-dev": "NODE_OPTIONS=--enable-source-maps nodemon -r dotenv/config dist/index.js"
+    "start-dev": "NODE_OPTIONS=--enable-source-maps nodemon -r dotenv/config dist/index.js",
+    "start-dev-win": "nodemon -r dotenv/config dist/index.js"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
