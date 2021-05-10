@@ -1,18 +1,23 @@
 import Link from 'next/link';
 import Router from 'next/router';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import NavLinks from './NavLinks';
-import { PasswordContext } from '../lib/context/PasswordContext';
 
 interface Props {}
 
 const PageHeader: React.FC<Props> = () => {
-    const { isLoggedIn, logout } = useContext(PasswordContext);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const openMenu = () => setIsMenuOpen(true);
-    const closeMenu = () => setIsMenuOpen(false);
+    const openMenu = () => {
+        setIsMenuOpen(true);
+        document.body.classList.add('overflow-hidden');
+    };
+
+    const closeMenu = () => {
+        setIsMenuOpen(false);
+        document.body.classList.remove('overflow-hidden');
+    };
 
     useEffect(() => {
         Router.events.on('routeChangeStart', closeMenu);
