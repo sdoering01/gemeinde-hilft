@@ -22,7 +22,7 @@ const HelpRequestSchema = Yup.object().shape({
     title: Yup.string()
         .required('Dies ist ein Pflichtfeld')
         .max(100, 'Tätigkeit zu lang'),
-    description: Yup.string().max(500, 'Zusätzlichen Informationen zu lang'),
+    description: Yup.string().max(500, 'Zusätzliche Informationen zu lang'),
     accepted: Yup.boolean()
         .required('Dies ist ein Pflichtfeld')
         .isTrue('Dies ist ein Pflichtfeld')
