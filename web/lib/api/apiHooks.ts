@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { getHelpRequests, HelpRequest, createHelpRequest } from './rawApi';
 import { PasswordContext } from '../context/PasswordContext';
 
-interface HelpRequestResponse {
+export interface HelpRequestResponse {
     id: number;
     name: string;
     title: string;
