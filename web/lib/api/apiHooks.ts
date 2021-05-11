@@ -1,7 +1,13 @@
 import { useQuery, useMutation } from 'react-query';
 import { useContext } from 'react';
 
-import { getHelpRequests, HelpRequest, createHelpRequest } from './rawApi';
+import {
+    getHelpRequests,
+    HelpRequest,
+    createHelpRequest,
+    sendHelpRequestContact,
+    ContactInformation
+} from './rawApi';
 import { PasswordContext } from '../context/PasswordContext';
 
 export interface HelpRequestResponse {
@@ -25,5 +31,20 @@ export const useCreateHelpRequest = () => {
     const { password } = useContext(PasswordContext);
     return useMutation(async (helpRequest: HelpRequest) =>
         createHelpRequest(password, helpRequest)
+    );
+};
+
+export const useSendHelpRequestContact = () => {
+    const { password } = useContext(PasswordContext);
+    return useMutation(
+        async (params: {
+            requestId: number;
+            contactInformation: ContactInformation;
+        }) =>
+            sendHelpRequestContact(
+                password,
+                params.requestId,
+                params.contactInformation
+            )
     );
 };

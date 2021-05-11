@@ -12,9 +12,9 @@ export default {
     helpRequestContact: Joi.object()
         .keys({
             name: Joi.string().required().max(100),
-            email: Joi.string().max(200).email(),
-            phone: Joi.string().max(20),
-            additionalInformation: Joi.string().max(300)
+            email: Joi.string().allow('').max(200).email(),
+            phone: Joi.string().allow('').max(20),
+            additionalInformation: Joi.string().allow('').max(300)
         })
         .or('email', 'phone'),
     helpRequestEdit: Joi.object()

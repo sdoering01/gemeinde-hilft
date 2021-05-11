@@ -1,12 +1,14 @@
-import React, { MouseEventHandler } from 'react';
+import React, { useEffect, MouseEventHandler } from 'react';
 import { Form, Formik, Field } from 'formik';
 import * as Yup from 'yup';
 
 import Button from './Button';
 import Modal from './Modal';
 import CustomInputField from './CustomInputField';
+import { useSendHelpRequestContact } from '../lib/api/apiHooks';
 
 interface Props {
+    requestId: number;
     onClose?: MouseEventHandler;
 }
 
@@ -40,10 +42,17 @@ const RequestHelpSchema = Yup.object().shape(
     [['email', 'phone']]
 );
 
-const RequestHelpModal: React.FC<Props> = ({ onClose }) => {
-    const addHelpOffer = () => {
-        alert('Dummy implementation');
-    };
+let closeTimeout: NodeJS.Timeout;
+
+const RequestHelpModal: React.FC<Props> = ({ requestId, onClose }) => {
+    const { mutate, error, isSuccess, isLoading } = useSendHelpRequestContact();
+
+    useEffect(
+        () => () => {
+            clearTimeout(closeTimeout);
+        },
+        []
+    );
 
     return (
         <Modal
@@ -55,7 +64,20 @@ const RequestHelpModal: React.FC<Props> = ({ onClose }) => {
             onClose={onClose}
         >
             <Formik
-                onSubmit={addHelpOffer}
+                onSubmit={(values, { resetForm }) => {
+                    const contactInformation = { ...values };
+                    delete contactInformation.accepted;
+
+                    mutate(
+                        { requestId, contactInformation },
+                        {
+                            onSuccess: () => {
+                                resetForm();
+                                closeTimeout = setTimeout(onClose, 5000);
+                            }
+                        }
+                    );
+                }}
                 validationSchema={RequestHelpSchema}
                 initialValues={{
                     name: '',
@@ -116,6 +138,17 @@ const RequestHelpModal: React.FC<Props> = ({ onClose }) => {
                             (Mindestens eins von E-Mail-Adresse oder
                             Telefonnummer)
                         </div>
+                        {isSuccess && (
+                            <div className="bg-green-300 p-1 px-2 rounded-md">
+                                Deine Daten wurden der Person erfolgreich
+                                übermittelt
+                            </div>
+                        )}
+                        {error && (
+                            <div className="bg-red-300 p-1 px-2 rounded-md">
+                                {(error as Error).message}
+                            </div>
+                        )}
                         <Button type="submit">Absenden</Button>
                     </Form>
                 )}

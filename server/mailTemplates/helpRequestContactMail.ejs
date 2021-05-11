@@ -2,7 +2,7 @@
 
 <p><%= helperName %> möchte dir bei deiner Anfrage <i><%= requestTitle %></i> helfen.</p>
 
-<p>Du erreicht sie/ihn unter folgenden Kontaktdaten</p>
+<p>Du erreichst sie/ihn unter folgenden Kontaktdaten</p>
 <ul>
     <% if(email) { %>
         <li>E-Mail-Adresse: <a href="mailto:<%= email %>"><%= email %></a></li>
@@ -14,8 +14,8 @@
 
 <% if(additionalInformation) { %>
 <p>Es wurde zusätzlich folgende Nachricht für dich hinterlassen. Bitte folge enthaltene Links nicht unüberlegt!</p>
-<pre>
-    <%= additionalInformation %>
+<pre style="margin-left: 8px;">
+<%= additionalInformation %>
 </pre>
 <% } %>
 

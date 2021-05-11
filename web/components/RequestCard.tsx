@@ -10,7 +10,7 @@ interface Props {
 }
 
 const RequestCard: React.FC<Props> = ({
-    request: { name, title, createdAt, description }
+    request: { id, name, title, createdAt, description }
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -20,7 +20,9 @@ const RequestCard: React.FC<Props> = ({
 
     return (
         <>
-            {isModalOpen && <HelpRequestContactModal onClose={closeModal} />}
+            {isModalOpen && (
+                <HelpRequestContactModal requestId={id} onClose={closeModal} />
+            )}
             <Card
                 className="flex flex-col items-center w-full text-center"
                 size={CardSize.LARGE}

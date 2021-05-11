@@ -19,6 +19,13 @@ export interface HelpRequest {
     description?: string;
 }
 
+export interface ContactInformation {
+    name: string;
+    email?: string;
+    phone?: string;
+    additionalInformation?: string;
+}
+
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const makeApiCall = async (
@@ -70,5 +77,17 @@ export const createHelpRequest = async (
         method: 'POST',
         password,
         body: JSON.stringify(helpRequest)
+    });
+};
+
+export const sendHelpRequestContact = async (
+    password: string,
+    requestId: number,
+    contactInformation: ContactInformation
+) => {
+    return makeApiCall(`/help/requests/${requestId}/contact`, {
+        method: 'POST',
+        password,
+        body: JSON.stringify(contactInformation)
     });
 };
