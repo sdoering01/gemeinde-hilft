@@ -18,6 +18,10 @@ export class HelpRequestRepo {
             .orderBy('id', 'desc');
     }
 
+    static async getByIdFull(id: number) {
+        return knex('helpRequests').select('*').where('id', id).first();
+    }
+
     static async getByIdWithToken(id: number) {
         return knex('helpRequests')
             .select('id', 'name', 'title', 'description', 'createdAt', 'token')

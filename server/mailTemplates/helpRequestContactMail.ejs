@@ -1,0 +1,27 @@
+<p>Hallo<% if(recipientName && recipientName !== 'Anonym') { %> <%= recipientName %><% } %>,</p>
+
+<p><%= helperName %> möchte dir bei deiner Anfrage <i><%= requestTitle %></i> helfen.</p>
+
+<p>Du erreicht sie/ihn unter folgenden Kontaktdaten</p>
+<ul>
+    <% if(email) { %>
+        <li>E-Mail-Adresse: <a href="mailto:<%= email %>"><%= email %></a></li>
+    <% } %>
+    <% if(phone) { %>
+        <li>Telefonnummer: <%= phone %></li>
+    <% } %>
+</ul>
+
+<% if(additionalInformation) { %>
+<p>Es wurde zusätzlich folgende Nachricht für dich hinterlassen. Bitte folge enthaltene Links nicht unüberlegt!</p>
+<pre>
+    <%= additionalInformation %>
+</pre>
+<% } %>
+
+<p>
+    <b>Denke bitte daran die Anfrage zu löschen, wenn der Kontakt dir helfen konnte!</b><br />
+    Dies kannst du mit einem Klick auf folgenden Link tun: LINK HIER EINFÜGEN (ID: <%= id %>, Token: <%= token %>)
+</p>
+
+<%- include('footer'); %>

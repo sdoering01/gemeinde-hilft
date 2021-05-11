@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import _ from 'lodash';
 
 import {
@@ -10,14 +10,42 @@ import schema from './schema';
 import { HelpRequestRepo } from '../../../database/repository/HelpRequestRepo';
 import { passwordMiddleware } from '../../../auth/passwordMiddleware';
 import { HttpError } from '../../../util/HttpError';
+import { sendHelpRequestContactMail } from '../../../mail/templates/sendHelpRequestContactMail';
+
+const helpRequestTokenValidator = asyncHandler(async (req, _res, next) => {
+    const id = +req.params.id;
+    const helpToken = req.headers['x-help-token'] as string;
+    const helpRequest = await HelpRequestRepo.getByIdWithToken(id);
+
+    if (!helpRequest) {
+        return next(
+            new HttpError(404, 'Hilfeanfrage konnte nicht gefunden werden')
+        );
+    }
+
+    if (helpRequest.token !== helpToken) {
+        return next(new HttpError(403, 'Falscher Token für die Hilfeanfrage'));
+    }
+
+    req.helpRequest = _.omit(helpRequest, 'token');
+    next();
+});
 
 const tokenProtectedRouter = Router();
 
-tokenProtectedRouter.get('/', (req, res, _next) => {
-    res.status(200).json(req.helpRequest);
-});
+tokenProtectedRouter.get('/:id', [
+    validatorMiddleware(schema.helpRequestId, ValidationSource.PARAM),
+    validatorMiddleware(schema.helpRequestToken, ValidationSource.HEADER),
+    helpRequestTokenValidator,
+    (req: Request, res: Response, _next: NextFunction) => {
+        res.status(200).json(req.helpRequest);
+    }
+]);
 
-tokenProtectedRouter.patch('/', [
+tokenProtectedRouter.patch('/:id', [
+    validatorMiddleware(schema.helpRequestId, ValidationSource.PARAM),
+    validatorMiddleware(schema.helpRequestToken, ValidationSource.HEADER),
+    helpRequestTokenValidator,
     validatorMiddleware(schema.helpRequestEdit),
     asyncHandler(async (req, res, _next) => {
         const helpRequestEdit = req.body;
@@ -29,13 +57,15 @@ tokenProtectedRouter.patch('/', [
     })
 ]);
 
-tokenProtectedRouter.delete(
-    '/',
+tokenProtectedRouter.delete('/:id', [
+    validatorMiddleware(schema.helpRequestId, ValidationSource.PARAM),
+    validatorMiddleware(schema.helpRequestToken, ValidationSource.HEADER),
+    helpRequestTokenValidator,
     asyncHandler(async (req, res, _next) => {
         await HelpRequestRepo.deleteById(req.helpRequest.id);
         return res.status(200).send();
     })
-);
+]);
 
 const passwordProtectedRouter = Router();
 
@@ -54,20 +84,19 @@ passwordProtectedRouter.post('/', [
 
         if (!helpRequest.name) helpRequest.name = 'Anonym';
 
-        const createdHelpRequest = await HelpRequestRepo.create(req.body);
+        const createdHelpRequest = await HelpRequestRepo.create(helpRequest);
         res.status(201).json(createdHelpRequest);
     })
 ]);
 
-const router = Router();
-
-router.use('/:id', [
+passwordProtectedRouter.post('/:id/contact', [
     validatorMiddleware(schema.helpRequestId, ValidationSource.PARAM),
-    validatorMiddleware(schema.helpRequestToken, ValidationSource.HEADER),
-    asyncHandler(async (req, _res, next) => {
+    validatorMiddleware(schema.helpRequestContact),
+    asyncHandler(async (req, res, next) => {
         const id = +req.params.id;
-        const helpToken = req.headers['x-help-token'] as string;
-        const helpRequest = await HelpRequestRepo.getByIdWithToken(id);
+        const contactInformation = req.body;
+
+        const helpRequest = await HelpRequestRepo.getByIdFull(id);
 
         if (!helpRequest) {
             return next(
@@ -75,17 +104,19 @@ router.use('/:id', [
             );
         }
 
-        if (helpRequest.token !== helpToken) {
-            return next(
-                new HttpError(403, 'Falscher Token für die Hilfeanfrage')
-            );
-        }
+        await sendHelpRequestContactMail(helpRequest, contactInformation);
 
-        req.helpRequest = _.omit(helpRequest, 'token');
-        next();
-    }),
-    tokenProtectedRouter
+        res.status(202).send();
+    })
 ]);
+
+const router = Router();
+
+// Every route of the tokenProtectedRouter needs to explictly
+// use the helpRequestTokenValidator so that routes with a
+// similar scheme can be used as a password protected route
+router.use(tokenProtectedRouter);
+
 router.use(passwordMiddleware);
 router.use(passwordProtectedRouter);
 

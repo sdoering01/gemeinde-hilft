@@ -1,7 +1,6 @@
-import { environment } from '../config';
+import { environment, mailFrom } from '../config';
 import { sendMailDev } from './sendMailDevelopment';
 import { sendMailProd } from './sendMailProduction';
-import { mailFrom } from '../config';
 
 export interface MailOptions {
     from?: string;

@@ -1,5 +1,7 @@
 import Joi from 'joi';
 
+import { numericString } from '../../../util/commonValidators';
+
 export default {
     helpRequest: Joi.object().keys({
         email: Joi.string().required().max(200).email(),
@@ -7,6 +9,14 @@ export default {
         title: Joi.string().required().max(100),
         description: Joi.string().allow('').max(500)
     }),
+    helpRequestContact: Joi.object()
+        .keys({
+            name: Joi.string().required().max(100),
+            email: Joi.string().max(200).email(),
+            phone: Joi.string().max(20),
+            additionalInformation: Joi.string().max(300)
+        })
+        .or('email', 'phone'),
     helpRequestEdit: Joi.object()
         .keys({
             title: Joi.string().allow('').max(100),
@@ -19,12 +29,6 @@ export default {
         })
         .unknown(true),
     helpRequestId: Joi.object().keys({
-        id: Joi.string()
-            .required()
-            .custom((value: string, helpers) => {
-                if (!/^[0-9]+$/.test(value))
-                    return helpers.error('any.invalid');
-                return value;
-            }, 'Help request id numeric')
+        id: numericString
     })
 };
