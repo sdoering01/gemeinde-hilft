@@ -16,9 +16,13 @@ const RequestList: React.FC<Props> = () => {
 
     return (
         <div className="flex flex-col gap-4 xs:gap-8 items-center">
-            {data.map((request) => (
-                <RequestCard key={request.id} request={request}></RequestCard>
-            ))}
+            {data.length === 0 ? (
+                <p className="text-xl text-center">Keine Anfragen vorhanden</p>
+            ) : (
+                data.map((request) => (
+                    <RequestCard key={request.id} request={request} />
+                ))
+            )}
         </div>
     );
 };

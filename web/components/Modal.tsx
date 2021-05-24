@@ -5,12 +5,14 @@ import Card from './Card';
 interface Props {
     headerContent?: React.ReactNode;
     footerContent?: React.ReactNode;
-    onClose?: MouseEventHandler;
+    className?: string;
+    onClose?: () => void;
 }
 
 const Modal: React.FC<Props> = ({
     headerContent,
     footerContent,
+    className,
     children,
     onClose
 }) => {
@@ -45,7 +47,7 @@ const Modal: React.FC<Props> = ({
                             </span>
                         </header>
                     )}
-                    <div className="">{children}</div>
+                    <div className={className}>{children}</div>
                     {footerContent && (
                         <footer className="border-blueGray-800 border-t pt-4 mt-4">
                             {footerContent}

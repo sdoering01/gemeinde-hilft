@@ -28,6 +28,12 @@ export interface ContactInformation {
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+export class ApiError extends Error {
+    constructor(message: string, public code: number) {
+        super(message);
+    }
+}
+
 const makeApiCall = async (
     relativeUrl: string,
     { method = 'GET', body, password, helpToken }: ApiCallOptions
@@ -55,7 +61,7 @@ const makeApiCall = async (
 
     if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(errorText);
+        throw new ApiError(errorText, response.status);
     }
 
     return response;
@@ -89,5 +95,39 @@ export const sendHelpRequestContact = async (
         method: 'POST',
         password,
         body: JSON.stringify(contactInformation)
+    });
+};
+
+export const getHelpRequestWithToken = async (
+    helpToken: string,
+    requestId: number
+) => {
+    return (
+        await makeApiCall(`/help/requests/${requestId}`, {
+            method: 'GET',
+            helpToken
+        })
+    ).json();
+};
+
+export const updateHelpRequest = async (
+    helpToken: string,
+    requestId: number,
+    editedHelpRequest: Pick<HelpRequest, 'title' | 'description'>
+) => {
+    makeApiCall(`/help/requests/${requestId}`, {
+        method: 'PATCH',
+        helpToken,
+        body: JSON.stringify(editedHelpRequest)
+    });
+};
+
+export const deleteHelpRequest = async (
+    helpToken: string,
+    requestId: number
+) => {
+    makeApiCall(`/help/requests/${requestId}`, {
+        method: 'DELETE',
+        helpToken
     });
 };

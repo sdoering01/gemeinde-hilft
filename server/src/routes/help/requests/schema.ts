@@ -17,12 +17,10 @@ export default {
             additionalInformation: Joi.string().allow('').max(300)
         })
         .or('email', 'phone'),
-    helpRequestEdit: Joi.object()
-        .keys({
-            title: Joi.string().allow('').max(100),
-            description: Joi.string().allow('').max(500)
-        })
-        .or('title', 'description'),
+    helpRequestEdit: Joi.object().keys({
+        title: Joi.string().required().max(100),
+        description: Joi.string().allow('').max(500)
+    }),
     helpRequestToken: Joi.object()
         .keys({
             'x-help-token': Joi.string().required()

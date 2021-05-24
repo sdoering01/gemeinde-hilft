@@ -6,7 +6,7 @@
     <ul>
         <% helpRequests.forEach(function(helpRequest){ %>
             <li><%= helpRequest.title %>:
-                <a href="<%= editRequestRootUrl %>/request/<%= helpRequest.id %>?token=<%= helpRequest.token %>">
+                <a href="<%= editRequestRootUrl %>/request?id=<%= helpRequest.id %>&token=<%= helpRequest.token %>">
                     Bearbeiten oder Löschen
                 </a>
             </li>
@@ -18,7 +18,7 @@
     <ul>
         <% helpOffers.forEach(function(helpOffer){ %>
             <li><%= helpOffer.title %>:
-                <a href="<%= editRequestRootUrl %>/offer/<%= helpOffer.id %>?token=<%= helpOffer.token %>">
+                <a href="<%= editRequestRootUrl %>/offer?<%= helpOffer.id %>&token=<%= helpOffer.token %>">
                     Bearbeiten oder Löschen
                 </a>
             </li>

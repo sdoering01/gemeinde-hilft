@@ -2,6 +2,7 @@ import ejs from 'ejs';
 
 import { HelpRequest } from 'knex/types/tables';
 import { sendMail } from '../sendMail';
+import { editRequestRootUrl } from '../../config';
 
 export const sendHelpRequestContactMail = async (
     helpRequest: HelpRequest,
@@ -22,7 +23,8 @@ export const sendHelpRequestContactMail = async (
             phone: contactInformation.phone,
             additionalInformation: contactInformation.additionalInformation,
             id: helpRequest.id,
-            token: helpRequest.token
+            token: helpRequest.token,
+            editRequestRootUrl
         }
     );
 

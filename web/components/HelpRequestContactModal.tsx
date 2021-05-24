@@ -9,7 +9,7 @@ import { useSendHelpRequestContact } from '../lib/api/apiHooks';
 
 interface Props {
     requestId: number;
-    onClose?: MouseEventHandler;
+    onClose?: () => void;
 }
 
 const RequestHelpSchema = Yup.object().shape(
@@ -54,6 +54,12 @@ const RequestHelpModal: React.FC<Props> = ({ requestId, onClose }) => {
         []
     );
 
+    const handleClose = () => {
+        if (!isLoading) {
+            onClose();
+        }
+    };
+
     return (
         <Modal
             headerContent={
@@ -61,7 +67,7 @@ const RequestHelpModal: React.FC<Props> = ({ requestId, onClose }) => {
                     Gib bitte an, wie die Person dich erreichen kann
                 </h3>
             }
-            onClose={onClose}
+            onClose={handleClose}
         >
             <Formik
                 onSubmit={(values, { resetForm }) => {
