@@ -25,12 +25,7 @@ const NavLinks: React.FC<Props> = () => {
             </>
         );
     }
-    return (
-        <>
-            <NavLink href="/instructions">Anleitung</NavLink>
-            <NavLink href="/login">Anmelden</NavLink>
-        </>
-    );
+    return <NavLink href="/login">Anmelden</NavLink>;
 };
 
 export default NavLinks;
