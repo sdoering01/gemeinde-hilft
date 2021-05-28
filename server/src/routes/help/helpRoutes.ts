@@ -7,7 +7,7 @@ import schema from './schema';
 import { asyncHandler } from '../../util/asyncHandler';
 import { passwordMiddleware } from '../../auth/passwordMiddleware';
 import { HelpRequestRepo } from '../../database/repository/HelpRequestRepo';
-import { sendEditMail } from '../../mail/templates/sendEditMail';
+import { sendTokenMail } from '../../mail/templates/sendTokenMail';
 
 const router = Router();
 
@@ -28,7 +28,7 @@ router.post('/resendTokens', [
             'Eine E-Mail mit den Hilfeanfragen und -angeboten wird an die angegebene E-Mail-Adresse geschickt.'
         );
 
-        await sendEditMail(req.body.email, helpRequests);
+        await sendTokenMail(req.body.email, helpRequests);
     })
 ]);
 

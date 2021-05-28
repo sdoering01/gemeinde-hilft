@@ -5,13 +5,13 @@ import { editRequestRootUrl } from '../../config';
 import { sendMail } from '../sendMail';
 
 // TODO: add helpOffers
-export const sendEditMail = async (
+export const sendTokenMail = async (
     to: string,
     helpRequests: Pick<HelpRequest, 'id' | 'title' | 'token'>[],
     helpOffers: any = []
 ) => {
     const html = await ejs.renderFile(
-        __dirname + '/../../../mailTemplates/editMail.ejs',
+        __dirname + '/../../../mailTemplates/tokenMail.ejs',
         {
             editRequestRootUrl,
             helpRequests,

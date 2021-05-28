@@ -4,10 +4,10 @@ import RequestCard from './RequestCard';
 interface Props {}
 
 const RequestList: React.FC<Props> = () => {
-    const { data, status } = useHelpRequests();
+    const { data, status, error } = useHelpRequests();
 
-    if (status === 'error') {
-        return <div>Ein Fehler ist aufgetreten</div>;
+    if (error) {
+        return <div>{(error as Error).message}</div>;
     }
 
     if (status === 'loading') {
