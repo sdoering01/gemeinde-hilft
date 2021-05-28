@@ -75,7 +75,7 @@ export const getHelpRequests = async (password: string) => {
     return (await makeApiCall('/help/requests', { password })).json();
 };
 
-export const createHelpRequest = async (
+export const createHelpRequest = (
     password: string,
     helpRequest: HelpRequest
 ) => {
@@ -86,7 +86,7 @@ export const createHelpRequest = async (
     });
 };
 
-export const sendHelpRequestContact = async (
+export const sendHelpRequestContact = (
     password: string,
     requestId: number,
     contactInformation: ContactInformation
@@ -110,24 +110,29 @@ export const getHelpRequestWithToken = async (
     ).json();
 };
 
-export const updateHelpRequest = async (
+export const updateHelpRequest = (
     helpToken: string,
     requestId: number,
     editedHelpRequest: Pick<HelpRequest, 'title' | 'description'>
 ) => {
-    makeApiCall(`/help/requests/${requestId}`, {
+    return makeApiCall(`/help/requests/${requestId}`, {
         method: 'PATCH',
         helpToken,
         body: JSON.stringify(editedHelpRequest)
     });
 };
 
-export const deleteHelpRequest = async (
-    helpToken: string,
-    requestId: number
-) => {
-    makeApiCall(`/help/requests/${requestId}`, {
+export const deleteHelpRequest = (helpToken: string, requestId: number) => {
+    return makeApiCall(`/help/requests/${requestId}`, {
         method: 'DELETE',
         helpToken
+    });
+};
+
+export const resendTokens = (password: string, email: string) => {
+    return makeApiCall(`/help/resendTokens`, {
+        method: 'POST',
+        password,
+        body: JSON.stringify({ email })
     });
 };

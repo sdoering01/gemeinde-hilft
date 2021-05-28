@@ -10,7 +10,8 @@ import {
     ContactInformation,
     getHelpRequestWithToken,
     updateHelpRequest,
-    deleteHelpRequest
+    deleteHelpRequest,
+    resendTokens
 } from './rawApi';
 import { PasswordContext } from '../context/PasswordContext';
 
@@ -27,14 +28,14 @@ export const getHelpRequestKey = 'helpRequest';
 
 export const useHelpRequests = () => {
     const { password } = useContext(PasswordContext);
-    return useQuery<HelpRequestResponse[]>(getAllHelpRequestsKey, async () =>
+    return useQuery<HelpRequestResponse[]>(getAllHelpRequestsKey, () =>
         getHelpRequests(password)
     );
 };
 
 export const useCreateHelpRequest = () => {
     const { password } = useContext(PasswordContext);
-    return useMutation(async (helpRequest: HelpRequest) =>
+    return useMutation((helpRequest: HelpRequest) =>
         createHelpRequest(password, helpRequest)
     );
 };
@@ -42,7 +43,7 @@ export const useCreateHelpRequest = () => {
 export const useSendHelpRequestContact = () => {
     const { password } = useContext(PasswordContext);
     return useMutation(
-        async ({
+        ({
             requestId,
             contactInformation
         }: {
@@ -58,7 +59,7 @@ export const useHelpRequestWithToken = (
 ) => {
     return useQuery<HelpRequestResponse>(
         [getHelpRequestKey, requestId],
-        async () => getHelpRequestWithToken(helpToken, requestId),
+        () => getHelpRequestWithToken(helpToken, requestId),
         {
             retry: (failureCount, error) => {
                 if (failureCount >= 3) {
@@ -75,11 +76,16 @@ export const useHelpRequestWithToken = (
 
 export const useUpdateHelpRequest = (helpToken: string, requestId: number) => {
     return useMutation(
-        async (editedHelpRequest: Pick<HelpRequest, 'title' | 'description'>) =>
+        (editedHelpRequest: Pick<HelpRequest, 'title' | 'description'>) =>
             updateHelpRequest(helpToken, requestId, editedHelpRequest)
     );
 };
 
 export const useDeleteHelpRequest = (helpToken: string, requestId: number) => {
-    return useMutation(async () => deleteHelpRequest(helpToken, requestId));
+    return useMutation(() => deleteHelpRequest(helpToken, requestId));
+};
+
+export const useResendTokens = () => {
+    const { password } = useContext(PasswordContext);
+    return useMutation((email: string) => resendTokens(password, email));
 };
