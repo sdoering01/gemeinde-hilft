@@ -1,6 +1,7 @@
 import Head from 'next/head';
 
 import '../styles/globals.css';
+import '../styles/transitions.css';
 import PageHeader from '../components/PageHeader';
 import Providers from '../components/Providers';
 

@@ -5,12 +5,18 @@ import Button, { VARIANT } from './Button';
 import { useDeleteHelpRequest } from '../lib/api/apiHooks';
 
 interface Props {
+    show: boolean;
     id: number;
     token: string;
     onClose: () => void;
 }
 
-const HelpRequestDeleteModal: React.FC<Props> = ({ id, token, onClose }) => {
+const HelpRequestDeleteModal: React.FC<Props> = ({
+    show,
+    id,
+    token,
+    onClose
+}) => {
     const router = useRouter();
     const { mutate, isLoading, isSuccess, error } = useDeleteHelpRequest(
         token,
@@ -33,6 +39,7 @@ const HelpRequestDeleteModal: React.FC<Props> = ({ id, token, onClose }) => {
 
     return (
         <Modal
+            show={show}
             onClose={handleClose}
             headerContent={
                 <h3 className="text-xl">

@@ -8,6 +8,7 @@ import CustomInputField from './CustomInputField';
 import { useSendHelpRequestContact } from '../lib/api/apiHooks';
 
 interface Props {
+    show: boolean;
     requestId: number;
     onClose?: () => void;
 }
@@ -44,7 +45,7 @@ const RequestHelpSchema = Yup.object().shape(
 
 let closeTimeout: NodeJS.Timeout;
 
-const RequestHelpModal: React.FC<Props> = ({ requestId, onClose }) => {
+const RequestHelpModal: React.FC<Props> = ({ show, requestId, onClose }) => {
     const { mutate, error, isSuccess, isLoading } = useSendHelpRequestContact();
 
     useEffect(
@@ -62,6 +63,7 @@ const RequestHelpModal: React.FC<Props> = ({ requestId, onClose }) => {
 
     return (
         <Modal
+            show={show}
             headerContent={
                 <h3 className="text-xl">
                     Gib bitte an, wie die Person dich erreichen kann

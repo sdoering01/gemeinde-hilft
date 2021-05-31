@@ -144,6 +144,11 @@ const Home = () => {
                         Die Seite ist durch ein Passwort geschützt um Missbrauch
                         zu vermeiden
                     </li>
+                    <li>
+                        Anfragen und Angebote werden mit der angegebenen
+                        E-Mail-Adresse verknüpft, damit keine Accounts notwendig
+                        sind
+                    </li>
                 </ul>
             </div>
         </>

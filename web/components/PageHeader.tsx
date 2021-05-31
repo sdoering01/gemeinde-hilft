@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
+import { CSSTransition } from 'react-transition-group';
 
 import NavLinks from './NavLinks';
 
@@ -51,23 +52,35 @@ const PageHeader: React.FC<Props> = () => {
                     className="lg:hidden h-14 w-14 p-2 cursor-pointer select-none"
                 />
             </div>
-            {isMenuOpen && (
-                <>
-                    <div
-                        className="fixed z-20 top-0 left-0 w-full h-full bg-opacity-70 bg-black"
+            <CSSTransition
+                in={isMenuOpen}
+                timeout={500}
+                mountOnEnter={true}
+                unmountOnExit={true}
+                classNames="backdrop"
+            >
+                <div
+                    className="fixed z-20 top-0 left-0 w-full h-full bg-black transition-all duration-500"
+                    onClick={closeMenu}
+                />
+            </CSSTransition>
+            <CSSTransition
+                in={isMenuOpen}
+                timeout={500}
+                mountOnEnter={true}
+                unmountOnExit={true}
+                classNames="mobile-nav"
+            >
+                <nav className="flex flex-col bg-blueGray-800 items-center justify-center text-xl gap-2 z-20 p-4 pt-16 h-screen w-screen xs:w-80 fixed top-0 transition-all duration-500">
+                    <span
                         onClick={closeMenu}
-                    />
-                    <nav className="flex flex-col bg-blueGray-800 items-center justify-center text-xl gap-2 z-20 p-4 pt-16 h-screen w-screen xs:w-80 fixed top-0 right-0">
-                        <span
-                            onClick={closeMenu}
-                            className="absolute top-0 right-5 p-2 text-white text-5xl cursor-pointer select-none"
-                        >
-                            X
-                        </span>
-                        <NavLinks />
-                    </nav>
-                </>
-            )}
+                        className="absolute top-0 right-5 p-2 text-white text-5xl cursor-pointer select-none"
+                    >
+                        X
+                    </span>
+                    <NavLinks />
+                </nav>
+            </CSSTransition>
         </header>
     );
 };

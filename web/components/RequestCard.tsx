@@ -20,9 +20,11 @@ const RequestCard: React.FC<Props> = ({
 
     return (
         <>
-            {isModalOpen && (
-                <HelpRequestContactModal requestId={id} onClose={closeModal} />
-            )}
+            <HelpRequestContactModal
+                show={isModalOpen}
+                requestId={id}
+                onClose={closeModal}
+            />
             <Card
                 className="flex flex-col items-center w-full text-center"
                 size={CardSize.LARGE}

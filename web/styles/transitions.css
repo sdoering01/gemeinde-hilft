@@ -1,0 +1,32 @@
+@layer components {
+    .mobile-nav-enter,
+    .mobile-nav-exit {
+        @apply -right-full xs:-right-80;
+    }
+
+    .mobile-nav-enter-active,
+    .mobile-nav-enter-done {
+        @apply right-0;
+    }
+
+    .backdrop-enter,
+    .backdrop-exit {
+        @apply opacity-0;
+    }
+
+    .backdrop-enter-active,
+    .backdrop-enter-done {
+        @apply opacity-70;
+    }
+
+    /* Targets the modal inside the modal container */
+    .modal-enter > div,
+    .modal-exit > div {
+        @apply translate-y-8 opacity-0;
+    }
+
+    .modal-enter-active > div,
+    .modal-enter-done > div {
+        @apply translate-y-0 opacity-100;
+    }
+}

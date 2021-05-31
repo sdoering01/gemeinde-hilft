@@ -127,13 +127,12 @@ const EditRequest: React.FC<Props> = ({ id, token }) => {
                     </Formik>
                 )}
             </Card>
-            {confirmationModalOpen && (
-                <HelpRequestDeleteModal
-                    id={id}
-                    token={token}
-                    onClose={() => setConfirmationModalOpen(false)}
-                />
-            )}
+            <HelpRequestDeleteModal
+                show={confirmationModalOpen}
+                id={id}
+                token={token}
+                onClose={() => setConfirmationModalOpen(false)}
+            />
         </>
     );
 };
