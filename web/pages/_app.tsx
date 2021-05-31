@@ -13,7 +13,7 @@ const App = ({ Component, pageProps }) => {
 
             <Providers>
                 <PageHeader />
-                <main className="px-4 pb-8">
+                <main>
                     <Component {...pageProps} />
                 </main>
             </Providers>

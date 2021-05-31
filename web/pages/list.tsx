@@ -3,6 +3,7 @@ import { useState } from 'react';
 import LoggedInExlusive from '../components/LoggedInExlusive';
 import OverviewListHeader from '../components/OverviewListHeader';
 import OverviewListBody from '../components/OverviewListBody';
+import Layout from '../components/Layout';
 
 interface Props {}
 
@@ -18,13 +19,15 @@ const ListPage: React.FC<Props> = () => {
 
     return (
         <LoggedInExlusive>
-            <div className="max-w-screen-md mx-auto">
-                <OverviewListHeader
-                    activeSection={activeSection}
-                    setActiveSection={setActiveSection}
-                />
-                <OverviewListBody activeSection={activeSection} />
-            </div>
+            <Layout>
+                <div className="max-w-screen-md mx-auto">
+                    <OverviewListHeader
+                        activeSection={activeSection}
+                        setActiveSection={setActiveSection}
+                    />
+                    <OverviewListBody activeSection={activeSection} />
+                </div>
+            </Layout>
         </LoggedInExlusive>
     );
 };

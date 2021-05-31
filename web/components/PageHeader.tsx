@@ -25,7 +25,7 @@ const PageHeader: React.FC<Props> = () => {
     }, []);
 
     return (
-        <header className="h-16 w-full mb-8 px-4 bg-blueGray-900 shadow-md flex flex-row justify-between items-center">
+        <header className="h-16 w-full px-4 bg-blueGray-900 shadow-md flex flex-row justify-between items-center">
             <Link href="/">
                 <a>
                     <div className="h-full flex flex-row items-center">

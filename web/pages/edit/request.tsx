@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 
 import Card, { CardSize } from '../../components/Card';
 import EditRequest from '../../components/EditRequest';
+import Layout from '../../components/Layout';
 
 interface Props {}
 
@@ -11,15 +12,23 @@ const EditRequestPage: React.FC<Props> = () => {
 
     if (router.isReady) {
         if (!isNaN(+id) && typeof token === 'string') {
-            return router.isReady && <EditRequest id={+id} token={token} />;
+            return (
+                router.isReady && (
+                    <Layout>
+                        <EditRequest id={+id} token={token} />
+                    </Layout>
+                )
+            );
         } else {
             return (
-                <Card
-                    className="mx-auto text-center text-xl"
-                    size={CardSize.SMALL}
-                >
-                    Fehlerhafter Link
-                </Card>
+                <Layout>
+                    <Card
+                        className="mx-auto text-center text-xl"
+                        size={CardSize.SMALL}
+                    >
+                        Fehlerhafter Link
+                    </Card>
+                </Layout>
             );
         }
     }

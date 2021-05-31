@@ -10,6 +10,7 @@ import {
 } from '../../lib/api/apiHooks';
 import { queryClient } from '../../components/Providers';
 import LoggedInExlusive from '../../components/LoggedInExlusive';
+import Layout from '../../components/Layout';
 
 interface Props {}
 
@@ -33,7 +34,7 @@ const CreateRequest: React.FC<Props> = () => {
 
     return (
         <LoggedInExlusive>
-            <div>
+            <Layout>
                 <Card className="mx-auto">
                     <h2 className="text-center text-3xl">
                         Hilfeanfrage erstellen
@@ -133,7 +134,7 @@ const CreateRequest: React.FC<Props> = () => {
                         )}
                     </Formik>
                 </Card>
-            </div>
+            </Layout>
         </LoggedInExlusive>
     );
 };
