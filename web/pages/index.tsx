@@ -8,7 +8,7 @@ const Home = () => {
     return (
         <>
             <div className="py-24 flex flex-col items-center justify-center text-center text-5xl bg-gradient-to-b from-blueGray-900 via-blueGray-500 to-blueGray-500 text-white sm:text-6xl">
-                <h1 className="mb-24">
+                <h1 className="mb-24 filter drop-shadow-2xl">
                     Gemeinde
                     <br />
                     hilft
