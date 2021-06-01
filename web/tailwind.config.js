@@ -1,10 +1,21 @@
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-    purge: [
-        './pages/**/*.{js,ts,jsx,tsx}',
-        './components/**/*.{js,ts,jsx,tsx}'
-    ],
+    purge: {
+        content: [
+            './pages/**/*.{js,ts,jsx,tsx}',
+            './components/**/*.{js,ts,jsx,tsx}'
+        ],
+        options: {
+            safelist: [
+                /*
+                 * Don't purge classes that are dynamically
+                 * added by react-transition-group
+                 */
+                /-(appear|enter|exit)(-active|-done)?$/
+            ]
+        }
+    },
     darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {
