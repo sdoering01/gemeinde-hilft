@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import NavLinks from './NavLinks';
+import { useHideBodyOverflow } from '../lib/hooks/useHideBodyOverflow';
 
 interface Props {}
 
@@ -12,18 +13,18 @@ const PageHeader: React.FC<Props> = () => {
 
     const openMenu = () => {
         setIsMenuOpen(true);
-        document.body.classList.add('overflow-hidden');
     };
 
     const closeMenu = () => {
         setIsMenuOpen(false);
-        document.body.classList.remove('overflow-hidden');
     };
 
     useEffect(() => {
         Router.events.on('routeChangeStart', closeMenu);
         return () => Router.events.off('routeChangeStart', closeMenu);
     }, []);
+
+    useHideBodyOverflow(isMenuOpen);
 
     return (
         <header className="h-16 w-full px-4 bg-blueGray-900 shadow-md flex flex-row justify-between items-center">

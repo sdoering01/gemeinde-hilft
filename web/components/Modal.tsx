@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { CSSTransition } from 'react-transition-group';
 
 import Card from './Card';
+import { useHideBodyOverflow } from '../lib/hooks/useHideBodyOverflow';
 
 interface Props {
     show: boolean;
@@ -26,11 +27,9 @@ const Modal: React.FC<Props> = ({
     useEffect(() => {
         ref.current = document.getElementById('modal-portal');
         setIsMounted(true);
-        document.body.classList.add('overflow-hidden');
-        return () => {
-            document.body.classList.remove('overflow-hidden');
-        };
     }, []);
+
+    useHideBodyOverflow(show);
 
     if (!isMounted) {
         return null;
