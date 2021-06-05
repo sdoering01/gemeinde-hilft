@@ -19,16 +19,16 @@ router.post('/resendTokens', [
     passwordMiddleware,
     validatorMiddleware(schema.email),
     asyncHandler(async (req, res, _next) => {
-        const helpRequests = await HelpRequestRepo.getByEmailWithToken(
-            req.body.email
-        );
+        const email = req.body.email.toLowerCase();
+
+        const helpRequests = await HelpRequestRepo.getByEmailWithToken(email);
         // TODO: add helpOffers
 
         res.status(202).send(
             'Eine E-Mail mit den Hilfeanfragen und -angeboten wird an die angegebene E-Mail-Adresse geschickt.'
         );
 
-        await sendTokenMail(req.body.email, helpRequests);
+        await sendTokenMail(email, helpRequests);
     })
 ]);
 

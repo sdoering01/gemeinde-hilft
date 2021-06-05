@@ -81,6 +81,7 @@ passwordProtectedRouter.post('/', [
     validatorMiddleware(schema.helpRequest),
     asyncHandler(async (req, res, _next) => {
         const helpRequest = req.body;
+        helpRequest.email = helpRequest.email.toLowerCase();
 
         if (!helpRequest.name) helpRequest.name = 'Anonym';
 
