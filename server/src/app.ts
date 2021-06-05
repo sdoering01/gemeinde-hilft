@@ -1,16 +1,20 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 
-import { apiBaseUrl, corsOrigin } from './config';
+import { apiBaseUrl, corsOrigin, trustProxy } from './config';
 import baseRouter from './routes/baseRouter';
 import { HttpError } from './util/HttpError';
+import { globalLimiter } from './util/rateLimiters';
 
 export const app = express();
+
+app.set('trust proxy', trustProxy);
 
 // TODO: Add helmet
 
 app.use(cors({ origin: corsOrigin }));
 app.use(express.json());
+app.use(globalLimiter);
 
 app.use(`${apiBaseUrl}/`, baseRouter);
 

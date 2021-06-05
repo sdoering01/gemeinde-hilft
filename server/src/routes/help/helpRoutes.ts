@@ -8,6 +8,7 @@ import { asyncHandler } from '../../util/asyncHandler';
 import { passwordMiddleware } from '../../auth/passwordMiddleware';
 import { HelpRequestRepo } from '../../database/repository/HelpRequestRepo';
 import { sendTokenMail } from '../../mail/templates/sendTokenMail';
+import { resendTokensLimiter } from '../../util/rateLimiters';
 
 const router = Router();
 
@@ -18,6 +19,7 @@ router.use('/requests', requestsRoutes);
 router.post('/resendTokens', [
     passwordMiddleware,
     validatorMiddleware(schema.email),
+    resendTokensLimiter,
     asyncHandler(async (req, res, _next) => {
         const email = req.body.email.toLowerCase();
 

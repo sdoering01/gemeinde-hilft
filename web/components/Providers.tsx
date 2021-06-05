@@ -26,7 +26,8 @@ const Providers: React.FC<Props> = ({ children }) => {
                 retry: (failureCount, error) => {
                     if (
                         failureCount === 3 ||
-                        (error instanceof ApiError && error.code === 401)
+                        (error instanceof ApiError &&
+                            (error.code === 401 || error.code === 429))
                     ) {
                         return false;
                     }

@@ -84,6 +84,22 @@ const InstructionsPage: React.FC<Props> = () => {
                             hänge ggf. Bilder vom Fehler an.
                         </p>
                     </InstructionSection>
+                    <InstructionSection title="Ich bekommen eine Fehlermeldung, dass ich x Sekunden warten muss, bevor ich eine weitere Anfrage an den Server senden kann">
+                        <p>
+                            Dieser Fehler wird durch einen
+                            Sicherheitsmechanismus ausgelöst, welcher die
+                            Anfragen von einem Gerät (genauer einer IP-Adresse)
+                            innerhalb eines Zeitintervalls limitiert. Der
+                            Mechanismus verhindert bzw. verlangsamt zum
+                            Beispiel, dass Dritte das Passwort automatisiert
+                            knacken können.
+                        </p>
+                        <p>
+                            Wenn du der Meinung bist, dass du diese Meldung
+                            bekommst, obwohl du die Seite normal benutzt hast,
+                            schicke uns bitte eine E-Mail.
+                        </p>
+                    </InstructionSection>
                 </div>
             </Layout>
         </LoggedInExlusive>

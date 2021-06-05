@@ -6,3 +6,4 @@ export const apiPassword = process.env.API_PASSWORD as string;
 export const mailFrom = process.env.MAIL_FROM as string;
 export const editRequestRootUrl = process.env.EDIT_REQUEST_ROOT_URL as string;
 export const corsOrigin = process.env.CORS_ORIGIN as string;
+export const trustProxy = +process.env.TRUST_PROXY!;
