@@ -14,6 +14,20 @@ import Layout from '../../components/Layout';
 
 interface Props {}
 
+export const requestTokenKey = 'GH_requestTokens';
+
+const persistRequestToken = (id: number, token: string) => {
+    const prevStr = localStorage.getItem(requestTokenKey);
+    let prev: { id: number; token: string }[];
+    if (!prevStr) {
+        prev = [];
+    } else {
+        prev = JSON.parse(prevStr);
+    }
+    prev.push({ id, token });
+    localStorage.setItem(requestTokenKey, JSON.stringify(prev));
+};
+
 const HelpRequestSchema = Yup.object().shape({
     name: Yup.string().max(100, 'Name zu lang'),
     email: Yup.string()
@@ -54,11 +68,21 @@ const CreateRequest: React.FC<Props> = () => {
                             delete helpRequest.accepted;
 
                             mutate(helpRequest, {
-                                onSuccess: () => {
+                                onSuccess: async (data) => {
                                     resetForm();
                                     queryClient.invalidateQueries(
                                         getAllHelpRequestsKey
                                     );
+
+                                    try {
+                                        const { id, token } = await data.json();
+                                        persistRequestToken(id, token);
+                                    } catch (err) {
+                                        console.error(
+                                            'Could not persist request token'
+                                        );
+                                        console.error(err);
+                                    }
                                 }
                             });
                         }}

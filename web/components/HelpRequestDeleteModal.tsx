@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Modal from './Modal';
 import Button, { VARIANT } from './Button';
 import { useDeleteHelpRequest } from '../lib/api/apiHooks';
+import { requestTokenKey } from '../pages/create/request';
 
 interface Props {
     show: boolean;
@@ -10,6 +11,15 @@ interface Props {
     token: string;
     onClose: () => void;
 }
+
+const removePersistedToken = (id: number) => {
+    const prevStr = localStorage.getItem(requestTokenKey);
+    if (prevStr) {
+        const prev = JSON.parse(prevStr);
+        const filtered = prev.filter((val) => val.id !== id);
+        localStorage.setItem(requestTokenKey, JSON.stringify(filtered));
+    }
+};
 
 const HelpRequestDeleteModal: React.FC<Props> = ({
     show,
@@ -33,6 +43,7 @@ const HelpRequestDeleteModal: React.FC<Props> = ({
         mutate(null, {
             onSuccess: () => {
                 setTimeout(() => router.push('/'), 5000);
+                removePersistedToken(id);
             }
         });
     };
@@ -51,7 +62,8 @@ const HelpRequestDeleteModal: React.FC<Props> = ({
             <p>Diese Aktion kann nicht rückgängig gemacht werden!</p>
             {isSuccess && (
                 <div className="bg-green-300 p-1 px-2 rounded-md">
-                    Die Hilfeanfrage wurde erfolgreich gelöscht
+                    Die Hilfeanfrage wurde erfolgreich gelöscht. Du wirst
+                    automatisch auf die Startseite weitergeleitet.
                 </div>
             )}
             {error && (

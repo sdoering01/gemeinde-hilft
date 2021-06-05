@@ -8,7 +8,14 @@ export class HelpRequestRepo {
 
         const [createdHelpRequest] = await knex('helpRequests')
             .insert(helpRequest)
-            .returning(['id', 'name', 'title', 'description', 'createdAt']);
+            .returning([
+                'id',
+                'name',
+                'title',
+                'description',
+                'createdAt',
+                'token'
+            ]);
         return createdHelpRequest;
     }
 
