@@ -24,7 +24,7 @@ const Home = () => {
                     Wie funktioniert Gemeinde hilft?
                 </h2>
                 <div className="flex flex-wrap justify-around gap-2 text-center text-xl max-w-5xl mx-auto sm:gap-4">
-                    <div className="w-64 rounded-lg flex flex-col items-center p-6">
+                    <div className="w-64 rounded-lg flex flex-col items-center p-8">
                         <div className="bg-red-300 w-32 h-32 p-8 rounded-full mb-8">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

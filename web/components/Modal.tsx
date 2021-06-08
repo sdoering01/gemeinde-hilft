@@ -61,6 +61,7 @@ const Modal: React.FC<Props> = ({
                                     {headerContent}
                                     <span
                                         className="absolute top-1 right-1 px-2 text-2xl cursor-pointer select-none"
+                                        role="button"
                                         onClick={onClose}
                                     >
                                         &times;

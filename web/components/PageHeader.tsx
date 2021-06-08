@@ -49,6 +49,7 @@ const PageHeader: React.FC<Props> = () => {
                 <img
                     src="/burger.svg"
                     alt="Menü"
+                    role="button"
                     onClick={openMenu}
                     className="lg:hidden h-14 w-14 p-2 cursor-pointer select-none"
                 />
@@ -75,9 +76,10 @@ const PageHeader: React.FC<Props> = () => {
                 <nav className="flex flex-col bg-blueGray-800 items-center justify-center text-xl gap-2 z-20 p-4 pt-16 h-screen w-screen xs:w-80 fixed top-0 transition-all duration-500">
                     <span
                         onClick={closeMenu}
-                        className="absolute top-0 right-5 p-2 text-white text-5xl cursor-pointer select-none"
+                        role="button"
+                        className="absolute top-0 right-4 py-1 px-3 text-white text-5xl cursor-pointer select-none"
                     >
-                        X
+                        &times;
                     </span>
                     <NavLinks />
                 </nav>
