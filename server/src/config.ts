@@ -7,3 +7,7 @@ export const mailFrom = process.env.MAIL_FROM as string;
 export const editRequestRootUrl = process.env.EDIT_REQUEST_ROOT_URL as string;
 export const corsOrigin = process.env.CORS_ORIGIN as string;
 export const trustProxy = +process.env.TRUST_PROXY!;
+export const mailHost = process.env.MAIL_HOST as string;
+export const mailPort = +process.env.MAIL_PORT!;
+export const mailUser = process.env.MAIL_USER as string;
+export const mailPass = process.env.MAIL_PASS as string;
