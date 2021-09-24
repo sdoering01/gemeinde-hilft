@@ -3,6 +3,7 @@ import Head from 'next/head';
 import '../styles/globals.css';
 import '../styles/transitions.css';
 import PageHeader from '../components/PageHeader';
+import PageFooter from '../components/PageFooter';
 import Providers from '../components/Providers';
 
 const App = ({ Component, pageProps }) => {
@@ -14,9 +15,10 @@ const App = ({ Component, pageProps }) => {
 
             <Providers>
                 <PageHeader />
-                <main>
+                <main className="flex-grow relative">
                     <Component {...pageProps} />
                 </main>
+                <PageFooter />
             </Providers>
         </>
     );
